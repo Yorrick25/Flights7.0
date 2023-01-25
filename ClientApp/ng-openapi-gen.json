@@ -1,0 +1,6 @@
+{
+  "input": "C:\Users\yorri\OneDrive\Bureaublad\Tutorials.EU\Flights7.0\ClientApp\swagger.json",
+  "output": "src/app/api",
+  "skipJsonSuffix": true,
+  "removeStaleFiles": true
+}
