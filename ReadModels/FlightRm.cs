@@ -6,6 +6,7 @@
         string Price,
         TimePlaceRm Departure,
         TimePlaceRm Arrival,
-        int RemainingRumberOfSeats
+        int RemainingNumberOfSeats
         );
+
 }

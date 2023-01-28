@@ -11,20 +11,25 @@ namespace Flights7._0
             // Add services to the container.
 
             builder.Services.AddControllersWithViews();
-            builder.Services.AddSwaggerGen( c=>
+            builder.Services.AddSwaggerGen(c =>
             {
                 c.AddServer(new OpenApiServer
                 {
                     Description = "Development Server",
-                    Url = "https://localhost:7163"
+                    Url = "https://localhost:7280"
                 });
+
+                c.CustomOperationIds(e => $"{e.ActionDescriptor.RouteValues["action"] 
+                       + e.ActionDescriptor.RouteValues["controller"]}");
             });
 
             var app = builder.Build();
+
             app.UseCors(builder => builder
-                    .WithOrigins("*")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
+                .WithOrigins("*")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                );
 
             app.UseSwagger().UseSwaggerUI();
 
@@ -44,7 +49,7 @@ namespace Flights7._0
                 name: "default",
                 pattern: "{controller}/{action=Index}/{id?}");
 
-            app.MapFallbackToFile("index.html");
+            app.MapFallbackToFile("index.html"); ;
 
             app.Run();
         }
