@@ -211,6 +211,46 @@
           }
         }
       }
+    },
+    "/Passenger/{email}": {
+      "get": {
+        "tags": [
+          "Passenger"
+        ],
+        "operationId": "FindPassenger",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerRm"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerRm"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerRm"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -244,6 +284,27 @@
         "additionalProperties": false
       },
       "NewPassengerDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "gender": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PassengerRm": {
         "type": "object",
         "properties": {
           "email": {
