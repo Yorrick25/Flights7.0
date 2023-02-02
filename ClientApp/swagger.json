@@ -71,6 +71,36 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Flight"
+        ],
+        "operationId": "BookFlight",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
       }
     },
     "/Flight/{id}": {
@@ -255,6 +285,24 @@
   },
   "components": {
     "schemas": {
+      "BookDto": {
+        "type": "object",
+        "properties": {
+          "flightId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "passengerEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberOfSeats": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "FlightRm": {
         "type": "object",
         "properties": {

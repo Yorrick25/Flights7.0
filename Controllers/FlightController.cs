@@ -1,7 +1,7 @@
 ﻿using Flights7._0.ReadModels;
+using Flights7.Dtos;
 using Microsoft.AspNetCore.Mvc;
-
-using System;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 
 namespace Flights7._0.Controllers
 {
@@ -65,6 +65,10 @@ namespace Flights7._0.Controllers
                     random.Next(1, 853))
         };
 
+        static private IList<BookDto> Bookings = new List<BookDto>();
+
+
+
         public FlightController(ILogger<FlightController> logger)
         {
             _logger = logger;
@@ -90,6 +94,22 @@ namespace Flights7._0.Controllers
                 return NotFound();
 
             return Ok(flight);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(200)]
+        public IActionResult Book(BookDto dto)
+        {
+            System.Diagnostics.Debug.WriteLine($"Booking a new flight {dto.FlightId}");
+            var flightNotFound = flights.Any(f => f.Id == dto.FlightId);
+            if(flightNotFound == false)
+                return NotFound();
+
+            Bookings.Add(dto);
+            return CreatedAtAction(nameof(Find), new { id = dto.FlightId});
         }
 
     }
