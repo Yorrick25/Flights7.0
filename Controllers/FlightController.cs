@@ -1,6 +1,7 @@
 ﻿using Flights7._0.Domain.Entities;
 using Flights7._0.ReadModels;
 using Flights7.Domain.Entities;
+using Flights7.Domain.Errors;
 using Flights7.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
@@ -22,7 +23,7 @@ namespace Flights7._0.Controllers
                 random.Next(90, 5000).ToString(),
                 new TimePlace("Los Angeles",DateTime.Now.AddHours(random.Next(1, 3))),
                 new TimePlace("Istanbul",DateTime.Now.AddHours(random.Next(4, 10))),
-                    random.Next(1, 853)),
+                    2),
         new (   Guid.NewGuid(),
                 "Deutsche BA",
                 random.Next(90, 5000).ToString(),
@@ -123,17 +124,17 @@ namespace Flights7._0.Controllers
         {
             System.Diagnostics.Debug.WriteLine($"Booking a new flight {dto.FlightId}");
             
-            var flight = flights.Any(f => f.Id == dto.FlightId);
-            if(flight == false)
+            var flight = flights.SingleOrDefault(f => f.Id == dto.FlightId);
+            
+            if(flight == null)
                 return NotFound();
 
-            var booking = new Booking(
-                dto.FlightId,
-                dto.PassengerEmail,
-                dto.NumberOfSeats);
-
-            Bookings.Add(booking);
-            return CreatedAtAction(nameof(Find), new { id = booking.FlightId});
+            var error = flight.MakeBooking(dto.PassengerEmail, dto.NumberOfSeats);
+            
+            if(error is OverbookError)
+                return Conflict(new {message = "Not enough seats."}); 
+            
+            return CreatedAtAction(nameof(Find), new { id = dto.FlightId});
         }
 
     }

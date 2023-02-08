@@ -1,4 +1,6 @@
-﻿using Flights7.Domain.Entities;
+﻿using Flights7._0.ReadModels;
+using Flights7.Domain.Entities;
+using Flights7.Domain.Errors;
 
 namespace Flights7._0.Domain.Entities
 {
@@ -12,7 +14,29 @@ namespace Flights7._0.Domain.Entities
         )
 
     {
-            public IList<Booking> Bookings = new List<Booking>();
+        public IList<Booking> Bookings = new List<Booking>();
+        public int RemainingNumberOfSeats { get; set; } = RemainingNumberOfSeats;
+        public object? MakeBooking(string passengerEmail, byte numberOfSeats)
+        {
+            var flight = this;
+
+            //Making sure the flight is not getting overbooked.
+            if (flight.RemainingNumberOfSeats < numberOfSeats)
+            {
+                return new OverbookError();
+            }
+
+            var booking = new Booking(
+                passengerEmail,
+                numberOfSeats);
+
+            flight.Bookings.Add(booking);
+
+            //Making sure flight doesnt get overbooked.
+            flight.RemainingNumberOfSeats -= numberOfSeats;
+
+            return null;
+        }
     }
 
 }

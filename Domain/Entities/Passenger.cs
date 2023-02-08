@@ -7,5 +7,5 @@ namespace Flights7.Domain.Entities
         string FirstName,
         string LastName,
         bool Gender
-        )
+        );
 }
