@@ -1,4 +1,4 @@
-﻿namespace Flights7._0.Domain.Entities
+﻿namespace Flights7.Domain.Entities
 {
     public record TimePlace(string Place, DateTime Time);
 }

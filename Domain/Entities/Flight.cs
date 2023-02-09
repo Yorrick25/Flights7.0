@@ -1,8 +1,8 @@
-﻿using Flights7._0.ReadModels;
+﻿using Flights7.ReadModels;
 using Flights7.Domain.Entities;
 using Flights7.Domain.Errors;
 
-namespace Flights7._0.Domain.Entities
+namespace Flights7.Domain.Entities
 {
     public record Flight(
         Guid Id,
