@@ -1,5 +1,6 @@
 using Flights7.Data;
 using Flights7.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 namespace Flights7
@@ -9,6 +10,10 @@ namespace Flights7
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Add dbcontext
+            builder.Services.AddDbContext<Entities>(options => 
+                options.UseInMemoryDatabase(databaseName: "Flights"), ServiceLifetime.Singleton);
 
             // Add services to the container.
 
@@ -86,6 +91,8 @@ namespace Flights7
                     random.Next(1, 853))
             };
             entities.Flights.AddRange(flightsToSeed);
+
+            entities.SaveChanges();
 
             app.UseCors(builder => builder
                 .WithOrigins("*")

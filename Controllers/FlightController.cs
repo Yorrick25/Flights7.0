@@ -81,8 +81,10 @@ namespace Flights7.Controllers
             var error = flight.MakeBooking(dto.PassengerEmail, dto.NumberOfSeats);
             
             if(error is OverbookError)
-                return Conflict(new {message = "Not enough seats."}); 
-            
+                return Conflict(new {message = "Not enough seats."});
+
+            _entities.SaveChanges();
+
             return CreatedAtAction(nameof(Find), new { id = dto.FlightId});
         }
 
