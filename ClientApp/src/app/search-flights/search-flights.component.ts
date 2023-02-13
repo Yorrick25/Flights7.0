@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FlightService } from './../api/services/flight.service';
 import { FlightRm } from '../api/models';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-search-flights',
@@ -12,7 +13,16 @@ export class SearchFlightsComponent implements OnInit {
   searchResult: FlightRm[] = []
 
 
-  constructor(private flightService: FlightService) { }
+  constructor(private flightService: FlightService,
+              private fb: FormBuilder  ) { }
+
+  searchForm = this.fb.group({
+    source: [''],
+    destination: [''],
+    fromDate: [''],
+    toDate: [''],
+    numberOfPassenger: [1]
+    })
 
   ngOnInit(): void {
   }
