@@ -35,12 +35,22 @@ export class FlightService extends BaseService {
    * This method doesn't expect any request body.
    */
   searchFlight$Plain$Response(params?: {
+    fromDate?: string;
+    toDate?: string;
+    from?: string;
+    destination?: string;
+    numberOfPassengers?: number;
     context?: HttpContext
   }
 ): Observable<StrictHttpResponse<Array<FlightRm>>> {
 
     const rb = new RequestBuilder(this.rootUrl, FlightService.SearchFlightPath, 'get');
     if (params) {
+      rb.query('fromDate', params.fromDate, {});
+      rb.query('toDate', params.toDate, {});
+      rb.query('from', params.from, {});
+      rb.query('destination', params.destination, {});
+      rb.query('numberOfPassengers', params.numberOfPassengers, {});
     }
 
     return this.http.request(rb.build({
@@ -62,6 +72,11 @@ export class FlightService extends BaseService {
    * This method doesn't expect any request body.
    */
   searchFlight$Plain(params?: {
+    fromDate?: string;
+    toDate?: string;
+    from?: string;
+    destination?: string;
+    numberOfPassengers?: number;
     context?: HttpContext
   }
 ): Observable<Array<FlightRm>> {
@@ -78,12 +93,22 @@ export class FlightService extends BaseService {
    * This method doesn't expect any request body.
    */
   searchFlight$Response(params?: {
+    fromDate?: string;
+    toDate?: string;
+    from?: string;
+    destination?: string;
+    numberOfPassengers?: number;
     context?: HttpContext
   }
 ): Observable<StrictHttpResponse<Array<FlightRm>>> {
 
     const rb = new RequestBuilder(this.rootUrl, FlightService.SearchFlightPath, 'get');
     if (params) {
+      rb.query('fromDate', params.fromDate, {});
+      rb.query('toDate', params.toDate, {});
+      rb.query('from', params.from, {});
+      rb.query('destination', params.destination, {});
+      rb.query('numberOfPassengers', params.numberOfPassengers, {});
     }
 
     return this.http.request(rb.build({
@@ -105,6 +130,11 @@ export class FlightService extends BaseService {
    * This method doesn't expect any request body.
    */
   searchFlight(params?: {
+    fromDate?: string;
+    toDate?: string;
+    from?: string;
+    destination?: string;
+    numberOfPassengers?: number;
     context?: HttpContext
   }
 ): Observable<Array<FlightRm>> {

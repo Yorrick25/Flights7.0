@@ -17,18 +17,19 @@ export class SearchFlightsComponent implements OnInit {
               private fb: FormBuilder  ) { }
 
   searchForm = this.fb.group({
-    source: [''],
+    from: [''],
     destination: [''],
     fromDate: [''],
     toDate: [''],
-    numberOfPassenger: [1]
-    })
+    numberOfPassengers: [1]
+  })
 
   ngOnInit(): void {
+    this.search();
   }
 
   search() {
-    this.flightService.searchFlight({})
+    this.flightService.searchFlight(<any>this.searchForm.value)
       .subscribe(response => this.searchResult = response,
         this.handleError)
   }
